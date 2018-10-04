@@ -31,12 +31,12 @@ public class Model
      * 
      * Constructor #1
      * 
-     * @param
-     * @param
-     * @param
-     * @param
-     * @param
-     * @param
+     * @param theFirstName is the first name of the model.
+     * @param theLastName is the last name of the model.
+     * @param theHeightInches is the height of the model in inches.
+     * @param theWeightPounds is the weight in pounds.
+     * @param traveler is checking to see if the model travels or not.
+     * @param smoker is to see if th model smokes or not.
      * 
      */
     public Model(   String theFirstName, 
@@ -60,10 +60,10 @@ public class Model
      * 
      * Constructor #2
      * 
-     * @param
-     * @param
-     * @param
-     * @param
+     * @param theFirstName is the first name of the model.
+     * @param theLastName is the last name of the model.
+     * @param theHeightInches is the height of the model in inches.
+     * @param theWeightPounds is the weight of the model in pounds.
      * 
      */
     public Model(   String theFirstName, 
@@ -84,39 +84,51 @@ public class Model
     //Mutator Method "Setters"
 
     /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @param  willTravel sets the value for canTravel.
      */
     public final void setCanTravel(boolean willTravel)
     {
         canTravel = willTravel;
     }
 
+    /**
+     * @param smoker sets the value for smokes.
+     */
     public final void setSmokes(boolean smoker)
     {
         smokes = smoker;
     }
 
+    /**
+     * @param first sets the value for firstName.
+     */
     public final void setFirstName(String first){
         if((first != null) && (first.length() >= MIN_FIRST_LAST_NAME) && (first.length() <= MAX_FIRST_LAST_NAME)){
             firstName = first;
         }
     }
-
+    
+    /**
+     * @param last sets the value for lastName.
+     */
     public final void setLastName(String last){
         if((last != null) && (last.length() >= MIN_FIRST_LAST_NAME) && (last.length() <= MAX_FIRST_LAST_NAME)){
             lastName = last;
         }
     }
-
+    
+    /**
+     * @param height sets the value for heightInches.
+     */
     public final void setHeightInches(int height){
         if((height >= MIN_HEIGHT_INCHES) && (height <= MAX_HEIGHT_INCHES)){
             heightInches = height;
         }
     }
-
+    
+    /**
+     * @param weight sets the value for weightPounds.
+     */
     public final void setWeightPounds(double weight){
         if((weight >= MIN_WEIGHT_POUNDS) && (weight <= MAX_WEIGHT_POUNDS)){
             weightPounds = weight;
@@ -124,39 +136,60 @@ public class Model
     }
 
     //Accessor methods "Getter"
-    /*
-    String  firstName;
-    private String  lastName;
-    private int     heightInches;
-    private double  weightPounds;
-    private boolean canTravel;
-    private boolean smokes;
-     */
 
+    /**
+     * @return the first name
+     */
     public String getFirstName(){
         return this.firstName;
     }
-
+    
+    /**
+     * @return the last name
+     */
     public String getLastName(){
         return this.lastName;
     } 
 
+    /**
+     * @return the height in inches
+     */
     public int getHeightInches(){
         return this.heightInches;
     }
 
+    /**
+     * @return the weight in pounds
+     */
     public double getWeightPounds(){
-        return this.heightInches;
+        return this.weightPounds;
     }
-
+    
+    /**
+     * @return if the model travels or not
+     */
     public boolean getCanTravel(){
         return this.canTravel;
     }
-
+    
+    /**
+     * @return if the model smokes or not
+     */
     public boolean getSmokes(){
         return this.smokes;
     }
-
+    
+    /**
+     * 
+     * Accessor methods but are not pure accessor methods because it has some logic
+     * 
+     * checks to see which one out of the the three possible values will be returned
+     * 
+     * @return value feet
+     * @return value feet value inch
+     * @return value feet value inches
+     * 
+     */
     public String getHeightInFeetAndInches(){
         double inches = (double) heightInches;
         double feet = ((double)heightInches * 0.083);
@@ -175,28 +208,68 @@ public class Model
         }
 
     }
-
+    
+    /**
+     * Mutator Methods
+     * 
+     * @return converts pounds into kilograms
+     */
     public long getWeightKg(){
         long kilograms = Math.round(weightPounds * 0.454);
         return kilograms;
     }
 
     /**
+     * 
+     * @return occupation of model
+     */
     public static String getOccupation(){
-    }
-     **/
-
-    //mutator methods
-    public void setWeight(long kilograms){
+        return occupation;
     }
     
+
+    //mutator methods
+    
+    /**
+     * @param kilogram for weight of model
+     */
+    
+    public void setWeight(long kilograms){
+        kilograms = Math.round(weightPounds * 0.454);
+    }
+    
+    
+    /**
+     * @param pounds sets the weight of the model
+     */
     public void setWeight(double pounds){
+        weightPounds = weightPounds;
     }
 
+    /**
+     * @param feet and inches sets the height of the model
+     */
     public void setHeight(int feet, int inches){
+        inches = Math.round(heightInches);
+        feet = (int)Math.round(heightInches * 0.083);
+        double leftoverInches = inches%feet;
+
+        if(leftoverInches == 1){
+            feet = feet;
+        }
+
+        else if(leftoverInches == 0){
+            feet = feet;
+        }
+
+        else{
+            feet = feet;
+            inches = (int)leftoverInches;
+        }
     }
 
     public void setHeight(int inches){
+        heightInches = inches;
     }
 
     public void printDetails(){
