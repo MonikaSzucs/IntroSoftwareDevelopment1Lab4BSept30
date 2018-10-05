@@ -14,6 +14,9 @@ public class Model
     private static  final   int     MAX_HEIGHT_INCHES = 84;
     private static  final   double  MIN_WEIGHT_POUNDS = 80.0;
     private static  final   double  MAX_WEIGHT_POUNDS = 280.0;
+    private static  final   double  KILOGRAMS_TO_LBS = 0.454;
+    private static  final   double  INCHES_TO_FEET = 0.083;
+    private static  final   int     FEET_TO_INCHES = 12;
 
     //Class (Static) Variables
     private static  String occupation = "modeling";
@@ -192,7 +195,7 @@ public class Model
      */
     public String getHeightInFeetAndInches(){
         double inches = (double) heightInches;
-        double feet = ((double)heightInches * 0.083);
+        double feet = ((double)heightInches * INCHES_TO_FEET);
         double leftoverInches = inches%feet;
 
         if(leftoverInches == 1){
@@ -215,61 +218,82 @@ public class Model
      * @return converts pounds into kilograms
      */
     public long getWeightKg(){
-        long kilograms = Math.round(weightPounds * 0.454);
-        return kilograms;
+            long kilograms = Math.round(weightPounds * KILOGRAMS_TO_LBS);
+            return kilograms;
     }
 
     /**
      * 
      * @return occupation of model
+     * 
      */
     public static String getOccupation(){
-        return occupation;
+        if (occupation != null){
+            return occupation;
+        }
+        else{
+            throw new IllegalArgumentException("No occupation has been set.");
+        }
+        
     }
     
 
     //mutator methods
     
     /**
+     * Mutator method
+     * 
      * @param kilogram for weight of model
      */
     
     public void setWeight(long kilograms){
-        kilograms = Math.round(weightPounds * 0.454);
+        if ((kilograms >= MIN_WEIGHT_POUNDS) && (kilograms <= MAX_WEIGHT_POUNDS)){
+            weightPounds = (long)(kilograms * KILOGRAMS_TO_LBS);
+        }
+        else {
+            throw new IllegalArgumentException("The kilograms entered cannot be equal to or less than 0");
+        }
     }
     
     
     /**
+     * Mutator Method
+     * 
      * @param pounds sets the weight of the model
      */
     public void setWeight(double pounds){
-        weightPounds = weightPounds;
+        if((pounds>=MIN_WEIGHT_POUNDS) && (pounds<=MAX_WEIGHT_POUNDS)){
+            weightPounds = pounds;
+        }
+        else{
+            throw new IllegalArgumentException("The weight cannot be equal to or less than 0");
+        }
+        
     }
 
     /**
      * @param feet and inches sets the height of the model
      */
     public void setHeight(int feet, int inches){
-        inches = Math.round(heightInches);
-        feet = (int)Math.round(heightInches * 0.083);
-        double leftoverInches = inches%feet;
-
-        if(leftoverInches == 1){
-            feet = feet;
+        int totalInches = (feet * FEET_TO_INCHES) + inches;
+        if((totalInches >= MIN_HEIGHT_INCHES)&&(totalInches <= MAX_HEIGHT_INCHES)){
+            heightInches = totalInches;
         }
-
-        else if(leftoverInches == 0){
-            feet = feet;
-        }
-
         else{
-            feet = feet;
-            inches = (int)leftoverInches;
+            throw new IllegalArgumentException("The height must between 24 and 84 inches");
         }
     }
-
+    
+    /**
+     * @param inches of Model
+     */
     public void setHeight(int inches){
-        heightInches = inches;
+        if((inches>=MIN_HEIGHT_INCHES)&&(inches<=MAX_HEIGHT_INCHES)){
+            heightInches = inches;
+        }
+        else{
+            throw new IllegalArgumentException("The hight cannot be less than 24 and greater than 84 inches");
+        }
     }
 
     public void printDetails(){
